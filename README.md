@@ -1,39 +1,201 @@
-# 🚀 **DevOps Real-time Project: Swiggy Clone App Deployment**
+Project: NodeJs 
 
-In this **real-time DevOps project**, I demonstrate how to **deploy a Swiggy Clone App** using various modern tools and services in the DevOps ecosystem.
-## 🛠️ Tools & Services Used:
+Devops tools:
 
-1. **Terraform** ![Terraform](https://img.shields.io/badge/Terraform-7B42BC?style=flat-square&logo=terraform&logoColor=white)
-2. **GitHub** ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)
-3. **Jenkins** ![Jenkins](https://img.shields.io/badge/Jenkins-D24939?style=flat-square&logo=jenkins&logoColor=white)
-4. **SonarQube** ![SonarQube](https://img.shields.io/badge/SonarQube-4E9BCD?style=flat-square&logo=sonarqube&logoColor=white)
-5. **OWASP** ![OWASP](https://img.shields.io/badge/OWASP-000000?style=flat-square&logo=owasp&logoColor=white)
-6. **Trivy** ![Trivy](https://img.shields.io/badge/Trivy-00979D?style=flat-square&logo=trivy&logoColor=white)
-7. **Docker & DockerHub** ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white) ![DockerHub](https://img.shields.io/badge/DockerHub-2496ED?style=flat-square&logo=docker&logoColor=white)
+1. Git 
+2. GitHub
+3. jenkins 
+4. sonarqube
+5. docker 
 
----
+Infrastrctue tools: 
 
-### 📹 Video Link: [**Click Here**](https://youtu.be/x55z7rk0NAU?si=gM1_61wUoq3ChiHD)
+1. aws
+2. terraform  
 
-### 📂 Terraform Script Repository: [**Terraform Script for Swiggy Clone App**](https://github.com/KastroVKiran/Terraform-Script-Swiggy-Kastro.git)
 
-### 📺 Docker Playlist: [**Watch on YouTube**](https://youtube.com/playlist?list=PLs-PsDpuAuTeNx3OgGQ1QrpNBo-XE6VBh&si=c75uaxvjazr-mIdw)
+==============================================================================================================
 
----
 
-## About Me  
-<img src="https://media.licdn.com/dms/image/v2/D5603AQHJB_lF1d9OSw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1718971147172?e=1733356800&v=beta&t=bz-SXs7FHwIDqQ9xlPibErrGvpHDdAjMJEr9WqHsi9A" alt="Kastro Profile Image" width="150" height="150" style="border-radius:50%;">
+pre-requisites:
 
-**Kastro**    
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/kastro-kiran/)  
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/KastroVKiran)  
 
----
+1. install git/gitbash on your window or mac 
+2. install visual studio 
+3. mobaxterm if you are using windows
+4. aws cli (create a IAM user in aws account with Admin access)
+5. terraform 
 
-## 📢 **Share Your Experience!**
 
-If you've successfully deployed the **Swiggy Clone App** using this project, I'd love to hear about it!  
-- 📹 **Post your deployment video** and **tag me on LinkedIn**: [**Kastro Kiran**](https://www.linkedin.com/in/kastro-kiran/)
-- 💬 **Share your experience** of deploying the app and the tools you used.
+terraform on mac:
+`````````````````
 
-> “DevOps is not just a job; it's a journey to continuously improve processes and automate solutions.” – **Kastro**
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+brew tap hashicorp/tap
+brew install hashicorp/tap/terraform
+brew update
+brew upgrade hashicorp/tap/terraform
+terraform -help
+
+
+
+================================================================================
+
+Jenkin Configuration:
+
+1. access the jenkins app
+
+    http://34.235.159.194:8080/ (server public ip )
+
+
+2. follow the instructions to complete the jenkins setup
+
+3. change the admin default password 
+
+     . login the jenkin app
+
+     . go to admin -> security -> update your password under password and confirm password 
+
+
+required plugins for this project:
+
+1. eclipse temurin - (when you are using differen java versions)
+
+2. pipeline: stage view - (to see the stage wise execution pipeline)
+
+3. sonarqube scanner  - (scan the code)
+
+4. nodejs
+
+5. owasp dependency-check 
+
+6. docker pipeline 
+
+
+
+
+Configure tools:
+
+
+1. JDK Installation
+
+      Name: jdk17 (this name should be same as in Jenkinsfile)
+      Install automatically: Install from adoptium.net
+      version: jdk-17.0.11+9
+
+2. SonarQube Scanner installations
+
+      Name: sonar-scanner (this name should be same as in Jenkinsfile)
+      Install automatically: Install from Maven Central
+      version: keep the selected version
+
+3. NodeJS installations 
+
+      Name: node23 (this name should be same as in Jenkinsfile)
+      Install automatically: Install from nodejs.org
+      version: keep the selected version
+     
+
+4. Docker installations
+
+      Name: docker (this name should be same as in Jenkinsfile)
+      Install automatically: Install from Download from docker.com
+      version: latest
+
+
+5. Dependency-Check installations
+
+      Name: DP-Check (this name should be same as in Jenkinsfile)
+      Install automatically: Install from github.com
+      version: keep the selected version
+
+
+
+configure sonareqube credentials:(check step 2 below in SonarQube configuraion)
+
+
+    Dashboard -> manage jenkins -> credentials -> global -> add credentials
+
+     Kind: secret text 
+     
+     secret: 
+
+     id: sonar-token (this name should be same as in Jenkinsfile)
+
+
+
+configure sonarqube system:
+
+
+   Dashboard -> manage jenkins -> system -> SonarQube servers
+
+   name: sonar-server
+   Server URL: sonarqube server url 
+   Server authentication token: select the we create in the above step 
+
+
+
+Configure Docker credentials:
+
+
+    Dashboard -> manage jenkins -> credentials -> global -> add credentials
+
+     Kind: username and password 
+     
+     username:
+     
+     password:
+
+     id: docker-creds (this name should be same as in Jenkinsfile)
+
+
+
+=============================================================================================
+
+SonarQube configuraion:
+
+1. access the jenkins app
+
+    http://34.235.159.194:9000/ (server public ip )
+
+  default username: admin 
+          password: admin 
+
+  Note: we need to change the passwod          
+
+
+2. generate a token for admin user to access the sonarqube server from jenkins 
+
+    
+    adminstration -> security -> users -> update tokens -> generate token 
+
+    squ_b6c32b651690046c56c9eae4765a784931bc9cbd
+
+
+3. Generate webhook 
+
+     
+     adminstration  -> configuraion -> webhooks -> create 
+
+     name: jenkins 
+     http://54.152.130.97:8080/sonarqube-webhook/
+
+      here the ip is jenkins server
+
+
+================================================
+
+Create a Jenkins pipeline job
+
+
+===========================================================
+
+Access the application:  http://54.152.130.97:3000
+
+
+
+========================
+    
+
+
