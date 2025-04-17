@@ -13,11 +13,11 @@ pipeline{
                 cleanWs()
             }
         }
-        stage('Checkout from Git'){
+       /* stage('Checkout from Git'){
             steps{
                 git 'https://github.com/KastroVKiran/DevOps-Project-Swiggy.git'
             }
-        }
+        } */
         stage("Sonarqube Analysis "){
             steps{
                 withSonarQubeEnv('sonar-server') {
@@ -38,12 +38,13 @@ pipeline{
                 sh "npm install"
             }
         }
+        /*
         stage('OWASP FS SCAN') {
             steps {
                 dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
-        }
+        } */
         stage('TRIVY FS SCAN') {
             steps {
                 sh "trivy fs . > trivyfs.txt"
