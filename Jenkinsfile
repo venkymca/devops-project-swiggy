@@ -13,7 +13,8 @@ pipeline{
                 cleanWs()
             }
         }
-       /* stage('Checkout from Git'){
+        /*
+        stage('Checkout from Git'){
             steps{
                 git 'https://github.com/KastroVKiran/DevOps-Project-Swiggy.git'
             }
@@ -45,30 +46,33 @@ pipeline{
                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
         } */
+        /*
         stage('TRIVY FS SCAN') {
             steps {
                 sh "trivy fs . > trivyfs.txt"
             }
-        }
+        } /*
         stage("Docker Build & Push"){
             steps{
                 script{
                    withDockerRegistry(credentialsId: 'docker-creds', toolName: 'docker'){   
                        sh "docker build -t swiggy ."
-                       sh "docker tag swiggy chvenky357/swiggy:latest "
-                       sh "docker push chvenky357/swiggy:latest "
+                       sh "docker tag swiggy kastrov/swiggy:latest "
+                       sh "docker push kastrov/swiggy:latest "
                     }
                 }
             }
         }
+         /*
         stage("TRIVY"){
             steps{
                 sh "trivy image kastrov/swiggy:latest > trivy.txt" 
             }
         }
+        */
         stage('Deploy to container'){
             steps{
-                sh 'docker run -d --name swiggy -p 3000:3000 chvenky357/swiggy:latest'
+                sh 'docker run -d --name swiggy -p 3000:3000 kastrov/swiggy:latest'
             }
         }
     }
