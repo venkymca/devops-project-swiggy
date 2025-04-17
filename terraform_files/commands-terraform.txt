@@ -1,0 +1,5 @@
+1. terrafrom init
+2. terraform validate
+3. terraform plan
+4. terraform apply
+5. terraform destroy // if you want to delete the ENV
